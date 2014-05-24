@@ -1,0 +1,156 @@
+#+SETUPFILE: ../templates/template.org
+#+INCLUDE: ../widgets.org
+#+TITLE: Emacs и блог
+#+DESCRIPTION: Emacs как средство публикации записей
+#+KEYWORDS: org-mode org emacs blogging
+#+DATE: <2014-04-23 Ср>
+
+* Предисловие
+  Итак, это наконец-то случилось. Допилил экспорт из Emacs в html с нормальным [[file:../index.org][sitemap'ом]]. Теперь буду как все социокуртизанки постить про всё подряд. Ага.
+* Что использовалось
+  Для запиливания был использован [[http://orgmode.org/][сайт org-mode]] и [[http://stackoverflow.com/][stackoverflow]].
+* Как сделано
+  Итак, начнём.
+** Базовые штуки
+*** projects.el
+    Именно в этом файле находится основная конфигурация проекта.\\
+    Кроме материалов мануала ничего не использовалось, поэтому без комментариев просто приведу текст этого файла
+    #+BEGIN_SRC lisp
+    (setq org-publish-project-alist
+          '(
+            ("blog" :components ("blog-org" "blog-stylesheets" "blog-javascript" "blog-images"))
+            ("blog-org"
+             :base-directory "путь-до-бложика/blog/posts/"
+             :base-extension "org"
+             :publishing-directory "путь-до-бложика/blog/public/"
+             :recursive t
+             :exclude "template.org\\|widget"
+             :publishing-function org-publish-org-to-custom-html
+             :headline-levels 4
+             :auto-sitemap t
+             :sitemap-title "Записи"
+             :sitemap-function org-publish-org-custom-sitemap
+             :sitemap-filename "index.org"
+             :sitemap-template "templates/sitemap-template.org"
+             :sitemap-date-format "%d.%m.%Y"
+             :sitemap-file-entry-format "%t (%d)"
+             :with-toc nil
+             ;; html options
+             :html-preamble "<div class=\"header\"><h1>%t</h1><h2>%d</h2></div>"
+             :html-postamble nil
+    "<div class=\"postamble-content\">
+      <div class=\"pure-g-r\">
+     
+        <div class=\"pure-u-1-2\">
+          <ul class=\"postamble-copyright\">
+            <li>Built with <a href=\"http://purecss.io/\">Pure CSS</a></li>
+            <li>Created with <a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> and <a href=\"http://orgmode.org/\">Org-Mode</a></li>
+            <li><span style=\"-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;\">
+        &copy;
+    </span> Валентин Ионов, 2014</li>
+          </ul>
+        </div>
+     
+        <div class=\"pure-u-1-2\">
+          <ul class=\"postamble-links\">
+            <li><a href=\"https://github.com/vemperor\">Github</a></li>
+            <li><a href=\"https://plus.google.com/u/0/111577518760980284675\">Google+</a></li>
+            <li><a href=\"https://vk.com/v_emperor\">VK</a></li>
+          </ul>
+        </div>
+     
+      </div>
+    </div>"
+             :html-html5-fancy t
+             :html-head nil
+             :html-head-include-default-style nil
+             :html-head-include-scripts nil
+             :style nil
+             )
+            ("blog-stylesheets"
+             :base-directory "путь-до-бложика/blog/stylesheets/"
+             :base-extension "css"
+             :publishing-directory "путь-до-бложика/blog/public/stylesheets/"
+             :recursive t
+             :publishing-function org-publish-attachment
+             )
+            ("blog-javascript"
+             :base-directory "путь-до-бложика/blog/javascript/"
+             :base-extension "js"
+             :publishing-directory "путь-до-бложика/blog/public/javascript/"
+             :recursive t
+             :publishing-function org-publish-attachment
+             )
+            ("blog-images"
+             :base-directory "путь-до-бложика/blog/posts/images"
+             :base-extension "jpg\\|png"
+             :publishing-directory "путь-до-бложика/blog/public/images/"
+             :recursive t
+             :publishing-function org-publish-attachment
+             )
+            )
+          )
+
+    (provide 'projects)
+    #+END_SRC 
+    Немного фарш, конечно, и raw html в конфиге. Но с этим я пока возиться не стал. Может быть когда-нибудь сделаю нормально.
+*** customized-org-html.el
+**** org-export-html
+     Ввиду того, что оригинальный org-export-html делает пару вещей не так, пришлось сделать свою функцию экспорта (копипаста оригинала, C-s и C-S-%). Также пришлось сделать собственную функцию публикации. Приводить текст не буду --- его много и как-нибудь всё равно выложу его в публичный реп.
+**** Ссылки на файлы
+     Org-mode умеет красиво делать ссылки на файлы (в моём случае --- картинки). Но не очень красиво их заворачивает при экспорте. Слава [[http://stackoverflow.com/][stackoverflow]], я нашёл [[http://stackoverflow.com/questions/14684263/how-to-org-mode-image-absolute-path-of-export-html][решение]]. Приведу здесь код
+     #+BEGIN_SRC lisp
+     (defun org-custom-link-img-follow (path)
+       (org-open-file-with-emacs
+        (format "../images/%s" path)))
+
+     (defun org-custom-link-img-export (path desc format)
+       (cond
+        ((eq format 'html)
+         (format "<img src=\"/images/%s\" alt=\"%s\"/>" path desc))))
+
+     (org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
+     #+END_SRC
+** Разные плюшки
+   С основной частью мы разобрались, теперь про остальное.
+*** Стили
+    Для внешнего вида решил пользовать [[http://purecss.io/][pure css]]. Приятный и простой css-framework, показался мне симпатичным.\\
+    Подключается всё это дело через шаблоны (org-template). Вот код шаблона
+    #+BEGIN_SRC lisp
+    #+AUTHOR:    Emperor
+    #+EMAIL:     valentine.emperor@gmail.com
+    #+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/post-style.css" />
+    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/post-layout.css" />
+    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/menu.css" />
+     
+    #+STYLE: <script async="true" src="/javascript/run_prettify.js"></script>
+    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/google-code-prettify/desert-theme.css" />
+
+    #+OPTIONS: toc:t
+    #+LANGUAGE: ru
+    #+END_SRC
+**** Подсветка кода
+     Для подсветки кода используется [[http://code.google.com/p/google-code-prettify/][google-code-prettify]]. Как видно выше, в шаблоне подключаются соответствующие .js и .css.\\
+     Также перепилена функция экспорта кода. Приводить не буду, потому как опять много.
+*** Меню
+    Для меню у меня отдельный кусок html-кода, который нагло украден со [[http://purecss.io/layouts/side-menu/][страницы соответствующего layout'а pure css]].\\
+    Подключается отдельным org-файлом. К сожалению, приходится подключать вручную в каждом файле поста. Щито поделать, десу.
+*** Карта сайта (aka index.html)
+    Тут основные настройки прописаны в [[projects.el][projects.el]].\\
+    Стоит только отметить, что для sitemap'а отдельный шаблон. Ради этого была препилена функция генерации sitemap'а. Текст приводить не буду, ибо много, но приведу текст шаблона.
+    #+BEGIN_SRC lisp
+    #+AUTHOR:    Emperor
+    #+EMAIL:     valentine.emperor@gmail.com
+    #+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+    #+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-style.css" />
+    #+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-layout.css" />
+     
+    #+HTML_CONTAINER: div
+     
+    #+OPTIONS: toc:nil
+    #+LANGUAGE: ru
+    #+END_SRC
+    Очевидно, что отличается он только другим layout'ом.
+* Что дальше
+  Теперь надо прикрутить комменты из google+, angular/jquery для некоторой интерактивности, допилить стили. В первую очередь надо прикрутить сворачиваемость кода и содержания.
