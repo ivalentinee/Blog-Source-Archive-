@@ -8,7 +8,8 @@
 * Предисловие
   Итак, это наконец-то случилось. Допилил экспорт из Emacs в html с нормальным [[file:../index.org][sitemap'ом]]. Теперь буду как все социокуртизанки постить про всё подряд. Ага.
 * Что использовалось
-  Для запиливания был использован [[http://orgmode.org/][сайт org-mode]] и [[http://stackoverflow.com/][stackoverflow]].
+  Для публикации записей использован замечательный [[http://www.emacswiki.org/emacs/OrgMode][org-mode]].\\
+  Для запиливания были использованы [[http://orgmode.org/][сайт org-mode]] и [[http://stackoverflow.com/][stackoverflow]].
 * Как сделано
   Итак, начнём.
 ** Базовые штуки
