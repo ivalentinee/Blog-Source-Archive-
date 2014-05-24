@@ -1,0 +1,6 @@
+#+SETUPFILE: templates/sitemap-template.org
+
+#+TITLE: Записи
+
+   + Emacs
+     + [[file:Emacs/test.org][Emacs и блог (23.04.2014)]]

@@ -1,0 +1,22 @@
+#+SETUPFILE: ../templates/template.org
+#+INCLUDE: ../widgets.org
+#+TITLE: Emacs и блог
+#+DESCRIPTION: Emacs как средство публикации записей
+#+KEYWORDS: org-mode org emacs blogging
+#+DATE: <2014-04-23 Ср>
+
+* Code
+  #+BEGIN_SRC ruby
+    def custom
+      return 0
+    end
+     
+    def somefunction
+      return 0
+    end
+  #+END_SRC
+** Внутренний заголовок
+   Тут должна быть ссылка на изображение
+   [[img:Abbath.jpg]]
+* Ещё один заголовок
+  И тут тоже немного текста

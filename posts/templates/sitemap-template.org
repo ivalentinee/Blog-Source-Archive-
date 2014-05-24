@@ -1,0 +1,10 @@
+#+AUTHOR:    Emperor
+#+EMAIL:     valentine.emperor@gmail.com
+#+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+#+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-style.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-layout.css" />
+
+#+HTML_CONTAINER: div
+
+#+OPTIONS: toc:nil
+#+LANGUAGE: ru
