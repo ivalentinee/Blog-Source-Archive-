@@ -3,4 +3,4 @@
 #+TITLE: Записи
 
    + Emacs
-     + [[file:Emacs/test.org][Emacs и блог (23.04.2014)]]
+     + [[file:Emacs/emacs-bloging.org][Emacs и блог (23.04.2014)]]
