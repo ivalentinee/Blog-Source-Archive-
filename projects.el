@@ -18,7 +18,7 @@
          :sitemap-file-entry-format "%t (%d)"
          :with-toc nil
          ;; html options
-         :html-preamble "<div class=\"header\"><h1>%t</h1><h2>%d</h2></div>"
+         :html-preamble "<div class=\"header\"><h1>%t</h1><h2>%d</h2><p class=\"post-date\">%e</p></div>"
          :html-postamble
 "<div class=\"postamble-content\">
   <div class=\"pure-g-r\">
