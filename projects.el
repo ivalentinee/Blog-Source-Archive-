@@ -27,9 +27,7 @@
       <ul class=\"postamble-copyright\">
         <li>Built with <a href=\"http://purecss.io/\">Pure CSS</a></li>
         <li>Created with <a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> and <a href=\"http://orgmode.org/\">Org-Mode</a></li>
-        <li><span style=\"-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -khtml-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: inline-block;\">
-	&copy;
-</span> Валентин Ионов, 2014</li>
+        <li><a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\"><img alt=\"Лицензия Creative Commons\" style=\"border-width:0\" src=\"http://i.creativecommons.org/l/by-sa/4.0/80x15.png\" /></a> Валентин Ионов, 2014</li>
       </ul>
     </div>
 
@@ -42,6 +40,10 @@
     </div>
 
   </div>
+</div>
+
+<div id=\"copyright-text\">
+    Это <span xmlns:dct=\"http://purl.org/dc/terms/\" href=\"http://purl.org/dc/dcmitype/Text\" rel=\"dct:type\">произведение </span>, автор которого — <span xmlns:cc=\"http://creativecommons.org/ns#\" property=\"cc:attributionName\">Валентин Ионов </span>, доступно на условиях <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\">лицензии Creative Commons «Attribution-ShareAlike» («Атрибуция — На тех же условиях») 4.0 Всемирная </a>.
 </div>"
          :html-html5-fancy t
          :html-head nil
