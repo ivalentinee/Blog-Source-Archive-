@@ -2,9 +2,9 @@
       '(
         ("blog" :components ("blog-org" "blog-stylesheets" "blog-javascript" "blog-images"))
         ("blog-org"
-         :base-directory "./posts/"
+         :base-directory "~/coding/home/blog/posts/"
          :base-extension "org"
-         :publishing-directory "./public/"
+         :publishing-directory "~/coding/home/blog/public/"
          :recursive t
          :exclude "template.org\\|widget"
          :publishing-function org-publish-org-to-custom-html
@@ -50,23 +50,23 @@
          :style nil
          )
         ("blog-stylesheets"
-         :base-directory "./stylesheets/"
+         :base-directory "~/coding/home/blog/stylesheets/"
          :base-extension "css"
-         :publishing-directory "./public/stylesheets/"
+         :publishing-directory "~/coding/home/blog/public/stylesheets/"
          :recursive t
          :publishing-function org-publish-attachment
          )
         ("blog-javascript"
-         :base-directory "./javascript/"
+         :base-directory "~/coding/home/blog/javascript/"
          :base-extension "js"
-         :publishing-directory "./public/javascript/"
+         :publishing-directory "~/coding/home/blog/public/javascript/"
          :recursive t
          :publishing-function org-publish-attachment
          )
         ("blog-images"
-         :base-directory "./posts/images"
+         :base-directory "~/coding/home/blog/posts/images"
          :base-extension "jpg\\|png"
-         :publishing-directory "./public/images/"
+         :publishing-directory "~/coding/home/blog/public/images/"
          :recursive t
          :publishing-function org-publish-attachment
          )
