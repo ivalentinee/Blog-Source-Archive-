@@ -6,76 +6,82 @@
 #+DATE: <2014-05-24 Сб>
 
 * Предисловие
-  Итак, это наконец-то случилось. Допилил экспорт из Emacs в html с нормальным [[file:../index.org][sitemap'ом]]. Теперь буду как все социокуртизанки постить про всё подряд. Ага.
+Итак, это наконец-то случилось. Допилил экспорт из Emacs в html с нормальным [[file:../index.org][sitemap'ом]]. Теперь буду как все социокуртизанки постить про всё подряд. Ага.
 * Что использовалось
-  Для публикации записей использован замечательный [[http://www.emacswiki.org/emacs/OrgMode][org-mode]].\\
-  Для запиливания были использованы [[http://orgmode.org/][сайт org-mode]] и [[http://stackoverflow.com/][stackoverflow]].
+Для публикации записей использован замечательный [[http://www.emacswiki.org/emacs/OrgMode][org-mode]].\\
+Для запиливания были использованы [[http://orgmode.org/][сайт org-mode]] и [[http://stackoverflow.com/][stackoverflow]].
 * Как сделано
-  Итак, начнём.
+Итак, начнём.
 ** Базовые штуки
 *** projects.el
-    Именно [[https://github.com/vemperor/Blog-Source/blob/master/projects.el][в этом файле]] находится основная конфигурация проекта.\\
-    Кроме материалов мануала ничего не использовалось, поэтому комментировать нечего.\\
-    Немного фарш, конечно, и raw html в конфиге. Но с этим я пока возиться не стал. Может быть когда-нибудь сделаю нормально.
+Именно [[https://github.com/vemperor/Blog-Source/blob/master/projects.el][в этом файле]] находится основная конфигурация проекта.\\
+Кроме материалов мануала ничего не использовалось, поэтому комментировать нечего.\\
+Немного фарш, конечно, и raw html в конфиге. Но с этим я пока возиться не стал. Может быть когда-нибудь сделаю нормально.
 *** customized-org-html.el
 **** org-export-html
-     Ввиду того, что оригинальный org-export-html делает пару вещей не так, пришлось [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L587][сделать свою функцию экспорта]] (копипаста оригинала, C-s и C-S-%). Также пришлось сделать [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L45][собственную функцию публикации]].
+Ввиду того, что оригинальный org-export-html делает пару вещей не так, пришлось [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L587][сделать свою функцию экспорта]] (копипаста оригинала, C-s и C-S-%). Также пришлось сделать [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L45][собственную функцию публикации]].
 **** Ссылки на файлы
-     Org-mode умеет красиво делать ссылки на файлы (в моём случае --- картинки). Но не очень красиво их заворачивает при экспорте. Слава [[http://stackoverflow.com/][stackoverflow]], я нашёл [[http://stackoverflow.com/questions/14684263/how-to-org-mode-image-absolute-path-of-export-html][решение]]. Приведу здесь код
-     #+BEGIN_SRC lisp
-     (defun org-custom-link-img-follow (path)
-       (org-open-file-with-emacs
-        (format "../images/%s" path)))
+Org-mode умеет красиво делать ссылки на файлы (в моём случае --- картинки). Но не очень красиво их заворачивает при экспорте. Слава [[http://stackoverflow.com/][stackoverflow]], я нашёл [[http://stackoverflow.com/questions/14684263/how-to-org-mode-image-absolute-path-of-export-html][решение]]. Приведу здесь код
+#+BEGIN_SRC lisp
+(defun org-custom-link-img-follow (path)
+  (org-open-file-with-emacs
+   (format "../images/%s" path)))
 
-     (defun org-custom-link-img-export (path desc format)
-       (cond
-        ((eq format 'html)
-         (format "<img src=\"/images/%s\" alt=\"%s\"/>" path desc))))
+(defun org-custom-link-img-export (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<img src=\"/images/%s\" alt=\"%s\"/>" path desc))))
 
-     (org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
-     #+END_SRC
+(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
+#+END_SRC
+*UPD*
+Также добавил тип ссылок с превью img-t. И сейчас же его использую, чтобы потом возвращаться к тексту поста.\\
+Автор фотографии --- [[http://gongled.ru/][Глеб Гончаров]].
+
+[[img-t:test.jpg][Тестовое изображение]]
+
 ** Разные плюшки
-   С основной частью мы разобрались, теперь про остальное.
+С основной частью мы разобрались, теперь про остальное.
 *** Стили
-    Для внешнего вида решил пользовать [[http://purecss.io/][pure css]]. Приятный и простой css-framework, показался мне симпатичным.\\
-    Подключается всё это дело через шаблоны (org-template). Вот код шаблона
-    #+BEGIN_SRC lisp
-    #+AUTHOR:    Emperor
-    #+EMAIL:     valentine.emperor@gmail.com
-    #+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
-    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/post-style.css" />
-    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/post-layout.css" />
-    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/menu.css" />
-     
-    #+STYLE: <script async="true" src="/javascript/run_prettify.js"></script>
-    #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/google-code-prettify/desert-theme.css" />
+Для внешнего вида решил пользовать [[http://purecss.io/][pure css]]. Приятный и простой css-framework, показался мне симпатичным.\\
+Подключается всё это дело через шаблоны (org-template). Вот код шаблона
+#+BEGIN_SRC lisp
+#+AUTHOR:    Emperor
+#+EMAIL:     valentine.emperor@gmail.com
+#+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+#+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/post-style.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/post-layout.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/menu.css" />
+ 
+#+STYLE: <script async="true" src="/javascript/run_prettify.js"></script>
+#+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/google-code-prettify/desert-theme.css" />
 
-    #+OPTIONS: toc:t
-    #+LANGUAGE: ru
-    #+END_SRC
+#+OPTIONS: toc:t
+#+LANGUAGE: ru
+#+END_SRC
 **** Подсветка кода
-     Для подсветки кода используется [[http://code.google.com/p/google-code-prettify/][google-code-prettify]]. Как видно выше, в шаблоне подключаются соответствующие .js и .css.\\
-     Также перепилена [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L147][функция экспорта кода]].
+Для подсветки кода используется [[http://code.google.com/p/google-code-prettify/][google-code-prettify]]. Как видно выше, в шаблоне подключаются соответствующие .js и .css.\\
+Также перепилена [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L147][функция экспорта кода]].
 *** Меню
-    Для меню у меня отдельный кусок html-кода, который нагло украден со [[http://purecss.io/layouts/side-menu/][страницы соответствующего layout'а pure css]].\\
-    Подключается отдельным org-файлом. К сожалению, приходится подключать вручную в каждом файле поста. Щито поделать, десу.
+Для меню у меня отдельный кусок html-кода, который нагло украден со [[http://purecss.io/layouts/side-menu/][страницы соответствующего layout'а pure css]].\\
+Подключается отдельным org-файлом. К сожалению, приходится подключать вручную в каждом файле поста. Щито поделать, десу.
 *** Карта сайта (aka index.html)
-    Тут основные настройки прописаны в [[projects.el][projects.el]].\\
-    Стоит только отметить, что для sitemap'а отдельный шаблон. Ради этого была препилена [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L53][функция генерации sitemap'а]]. Приведу текст шаблона.
-    #+BEGIN_SRC lisp
-    #+AUTHOR:    Emperor
-    #+EMAIL:     valentine.emperor@gmail.com
-    #+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
-    #+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-style.css" />
-    #+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-layout.css" />
-     
-    #+HTML_CONTAINER: div
-     
-    #+OPTIONS: toc:nil
-    #+LANGUAGE: ru
-    #+END_SRC
-    Очевидно, что отличается он только layout'ом.
+Тут основные настройки прописаны в [[projects.el][projects.el]].\\
+Стоит только отметить, что для sitemap'а отдельный шаблон. Ради этого была препилена [[https://github.com/vemperor/emacs_config/blob/20999812763e86b95dfe84c3d57bbe8c1f28c416/.emacs.d/global/customized-org-html.el#L53][функция генерации sitemap'а]]. Приведу текст шаблона.
+#+BEGIN_SRC lisp
+#+AUTHOR:    Emperor
+#+EMAIL:     valentine.emperor@gmail.com
+#+STYLE: <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+#+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-style.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="stylesheets/sitemap-layout.css" />
+
+#+HTML_CONTAINER: div
+
+#+OPTIONS: toc:nil
+#+LANGUAGE: ru
+#+END_SRC
+Очевидно, что отличается он только layout'ом.
 * Что дальше
-  +Теперь надо прикрутить комменты из google++ *добавил disqus*, angular / jquery / что\_ещё\_там\_напридумывали\_для\_жабоскрапта для некоторой интерактивности, допилить стили. В первую очередь надо прикрутить сворачиваемость кода и содержания.
++Теперь надо прикрутить комменты из google++ *добавил disqus*, angular / jquery / что\_ещё\_там\_напридумывали\_для\_жабоскрапта для некоторой интерактивности, допилить стили. В первую очередь надо прикрутить сворачиваемость кода и содержания.
 
 #+INCLUDE: ../disqus.org
