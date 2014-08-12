@@ -5,4 +5,4 @@
    + Emacs
      + [[file:Emacs/emacs-bloging.org][Emacs и блог (24.05.2014)]]
    + Music
-     + [[file:Music/linux-recording.org][Запись звука в Linux (01.08.2014)]]
+     + [[file:Music/linux-recording.org][Запись звука в Linux (12.08.2014)]]
