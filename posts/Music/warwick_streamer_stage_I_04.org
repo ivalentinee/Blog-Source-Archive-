@@ -1,0 +1,25 @@
+#+SETUPFILE: ../templates/template.org
+#+INCLUDE: ../widget-menu.org
+#+TITLE: Warwick Streamer Stage I '04
+#+KEYWORDS: warwick streamer stage bass guitar бас варвик
+#+DATE: <2014-08-25 Вт>
+
+Похвалюсь и порадуюсь за себя)
+
+Вот уже полторы недели прошло с того момента, как я приобрёл [[http://www.warwickbass.com/en/Warwick---Products--Instruments--Made-in-Germany--Warwick-Series--Streamer--Streamer-Stage-I--4-string--Pictures.html][Warwick Streamer Stage I]] 2004 года. Четыре струны, сквозной гриф из клёна (пламенного!) и корпус тоже из клёна (пламенного!). Всё это дополняет чёрный цвет.
+
+file:https://lh4.googleusercontent.com/-dfcvqjXwLeU/U-3pFNz7faI/AAAAAAAAAFE/jOJceJJJRIs/w425-h564-no/P8151856-saturated.png
+
+Сразу же накатил на него комплект 65-130 и отстроил в B E A D.
+
+Бас, как я и думал, достаточно злой. Обладает глубоким звуком, и при этом имеет сильную "нижнюю середину". Встроенный преамп хорош, звукосниматели неплохие (по крайней мере пока что нет желания их менять).
+
+Записал тестовую композицию, на которой можно послушать инструмент в необработанном виде:
+
+[[https://dl.dropboxusercontent.com/u/20940723/Warwick%20Sample%20Track/Warwick%20Sample%20Track.ogg][полная композиция]]\\
+[[https://dl.dropboxusercontent.com/u/20940723/Warwick%20Sample%20Track/Warwick%20Sample%20Track%20(no%20guitars).ogg][бас и барабаны]]\\
+[[https://dl.dropboxusercontent.com/u/20940723/Warwick%20Sample%20Track/Warwick%20Sample%20Track%20(bass%20only).ogg][только бас]]
+
+Возможно через некоторое время появится куча пафосных фоточек баса и/или меня с ним.
+
+#+INCLUDE: ../disqus.org
