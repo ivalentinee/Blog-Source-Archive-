@@ -7,6 +7,7 @@
 #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/menu.css" />
 
 #+STYLE: <script async="true" src="/javascript/run_prettify.js"></script>
+#+STYLE: <script async="true" src="/javascript/ga.js"></script>
 #+STYLE: <link rel="stylesheet" type="text/css" href="/stylesheets/google-code-prettify/desert-theme.css" />
 
 #+OPTIONS: toc:t
